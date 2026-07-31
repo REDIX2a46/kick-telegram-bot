@@ -1,9 +1,8 @@
-import requests
 import time
+import requests
 from telegram import Bot
 
 BOT_TOKEN = "8659833120:AAEuvKEL96xdU16bJ_Clh0ECD8vD4gkWzBg"
-
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
@@ -54,7 +53,6 @@ STREAMERS = [
 
 bot = Bot(BOT_TOKEN)
 
-
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
@@ -62,7 +60,7 @@ def is_live(username):
         r = requests.get(
             url,
             headers={"User-Agent": "Mozilla/5.0"},
-            timeout=10
+            timeout=10,
         )
 
         if r.status_code != 200:
@@ -82,7 +80,6 @@ def is_live(username):
 
 
 if name == "main":
-
     print("🚀 Kick Telegram Bot Started")
 
     sent = set()
@@ -90,11 +87,9 @@ if name == "main":
     while True:
         try:
             for username in STREAMERS:
-
                 live, title = is_live(username)
 
                 if live and username not in sent:
-
                     bot.send_message(
                         chat_id=CHANNEL,
                         text=(
@@ -102,9 +97,8 @@ if name == "main":
                             f"👤 {username}\n"
                             f"📝 {title}\n\n"
                             f"https://kick.com/{username}"
-                        )
+                        ),
                     )
-
                     sent.add(username)
 
                 elif not live and username in sent:
