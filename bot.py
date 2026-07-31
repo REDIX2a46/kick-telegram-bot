@@ -1,3 +1,60 @@
+import requests
+import time
+from telegram import Bot
+
+BOT_TOKEN = "8659833120:AAEuvKEL96xdU16bJ_Clh0ECD8vD4gkWzBg"
+
+CHANNEL = "@redix_mt"
+
+STREAMERS = [
+    "AbuSwe7l",
+    "absi",
+    "drb7h",
+    "fwaz",
+    "id7o",
+    "SXB",
+    "f1aisal",
+    "sodry",
+    "fhlwy",
+    "saad",
+    "iabs",
+    "drex-7a",
+    "imonkey_d",
+    "abo_khrbaa",
+    "hook",
+    "okb8",
+    "abo8alyy",
+    "moustache",
+    "w1pey",
+    "rayn",
+    "osamah",
+    "majah92",
+    "s6mito",
+    "brof2",
+    "muvxn",
+    "klo25",
+    "s5b",
+    "hamadsenpai",
+    "ib6h",
+    "islf",
+    "morcei",
+    "seagull",
+    "i_sh7i",
+    "drak0ola",
+    "inq",
+    "eagle",
+    "1nex",
+    "idew",
+    "yznsa",
+    "ysmo",
+    "virus",
+    "abunoo7",
+    "abdulrhman"
+]
+
+bot = Bot(BOT_TOKEN)
+
+
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
@@ -5,7 +62,7 @@ def is_live(username):
         r = requests.get(
             url,
             headers={"User-Agent": "Mozilla/5.0"},
-            timeout=10,
+            timeout=10
         )
 
         if r.status_code != 200:
@@ -24,10 +81,7 @@ def is_live(username):
         return False, None
 
 
-if __name__ == "__main__":
-
-    if not BOT_TOKEN:
-        raise ValueError("لم يتم العثور على BOT_TOKEN في Environment Variables")
+if name == "main":
 
     print("🚀 Kick Telegram Bot Started")
 
@@ -48,7 +102,7 @@ if __name__ == "__main__":
                             f"👤 {username}\n"
                             f"📝 {title}\n\n"
                             f"https://kick.com/{username}"
-                        ),
+                        )
                     )
 
                     sent.add(username)
