@@ -2,7 +2,7 @@ import time
 import requests
 from telegram import Bot
 
-BOT_TOKEN = "8659833120:AAEuvKEL96xdU16bJ_Clh0ECD8vD4gkWzBg"
+BOT_TOKEN = "8659833120:AAGOddhqecy2XXvCTgd0y-xZ7UriWvH4Pks"
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
