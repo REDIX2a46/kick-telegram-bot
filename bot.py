@@ -93,9 +93,14 @@ def is_live(username):
         return False, None
 
 
-
 if __name__ == "__main__":
     print("🚀 Bot Started")
+    bot.send_message(chat_id=CHANNEL, text="✅ البوت اشتغل بنجاح")
+
+    sent = set()
+
+    while True:
+        ...
 
     sent = set()
 
