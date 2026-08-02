@@ -2,7 +2,7 @@ import time
 import requests
 from telegram import Bot
 
-BOT_TOKEN = "8659833120:AAGOddhqecy2XXvCTgd0y-xZ7UriWvH4Pks"
+BOT_TOKEN = "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
@@ -67,6 +67,7 @@ STREAMERS = [
 
 bot = Bot(BOT_TOKEN)
 
+
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
@@ -93,10 +94,22 @@ def is_live(username):
         return False, None
 
 
-if __name__ == "__main__":
+if name == "main":
     print("🚀 Bot Started")
 
     sent = set()
+
+    # إرسال البثوث الموجودة وقت التشغيل
+    for username in STREAMERS:
+        live, title = is_live(username)
+
+        if live:
+            bot.send_message(
+                chat_id=CHANNEL,
+                text=f"🔴 بث موجود الآن!\n\n👤 {username}\n📝 {title}\n\nhttps://kick.com/{username}"
+            )
+            sent.add(username)
+
 
     while True:
         for username in STREAMERS:
