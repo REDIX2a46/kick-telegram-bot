@@ -64,11 +64,13 @@ STREAMERS = [
     "z7lion",
     "1cjx"
 ]
+
 bot = Bot(BOT_TOKEN)
 
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
+
         response = requests.get(
             url,
             headers={"User-Agent": "Mozilla/5.0"},
@@ -91,7 +93,7 @@ def is_live(username):
         return False, None
 
 
-if __name__ == "__main__":
+if name == "main":
     print("🚀 Bot Started")
 
     sent = set()
