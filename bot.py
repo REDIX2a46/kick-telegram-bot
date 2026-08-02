@@ -78,7 +78,7 @@ def is_live(username):
             timeout=10
         )
 
-        if response.status_code != 200:
+            if response.status_code != 200:
             return False, None
 
         data = response.json()
@@ -115,7 +115,10 @@ if __name__ == "__main__":
         for username in STREAMERS:
             live, title = is_live(username)
 
+            print(username, live, title)
+           
             if live and username not in sent:
+
                 bot.send_message(
                     chat_id=CHANNEL,
                     text=f"🔴 بدأ بث جديد!\n\n👤 {username}\n📝 {title}\n\nhttps://kick.com/{username}"
