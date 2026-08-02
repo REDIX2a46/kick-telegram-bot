@@ -99,8 +99,8 @@ if __name__ == "__main__":
 
     sent = set()
 
-    while True:
-        ...
+    while True:         
+        
 
     sent = set()
 
