@@ -2,7 +2,7 @@ import time
 import requests
 from telegram import Bot
 
-BOT_TOKEN = "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
+BOT_TOKEN = "8659833120:AAGIBWUYFFP5EN1YHXJBQIY35EXLJF9MDA0"
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
@@ -78,7 +78,7 @@ def is_live(username):
             timeout=10
         )
 
-            if response.status_code != 200:
+        if response.status_code != 200:
             return False, None
 
         data = response.json()
@@ -99,30 +99,16 @@ if __name__ == "__main__":
 
     sent = set()
 
-    # إرسال البثوث الموجودة وقت التشغيل
-    for username in STREAMERS:
-        live, title = is_live(username)
-
-        if live:
-            bot.send_message(
-                chat_id=CHANNEL,
-                text=f"🔴 بث موجود الآن!\n\n👤 {username}\n📝 {title}\n\nhttps://kick.com/{username}"
-            )
-            sent.add(username)
-
-
     while True:
         for username in STREAMERS:
             live, title = is_live(username)
 
-            print(username, live, title)
-           
             if live and username not in sent:
-
                 bot.send_message(
                     chat_id=CHANNEL,
                     text=f"🔴 بدأ بث جديد!\n\n👤 {username}\n📝 {title}\n\nhttps://kick.com/{username}"
                 )
+
                 sent.add(username)
 
             elif not live and username in sent:
