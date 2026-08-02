@@ -94,7 +94,7 @@ def is_live(username):
         return False, None
 
 
-if name == "main":
+if __name__ == "__main__":
     print("🚀 Bot Started")
 
     sent = set()
