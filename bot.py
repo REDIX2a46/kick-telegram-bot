@@ -3,7 +3,7 @@ import requests
 import telebot
 from telebot import types
 
-BOT_TOKEN = " 8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
+BOT_TOKEN = ""
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
@@ -68,7 +68,7 @@ STREAMERS = [
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-sent = set()def is_live(username):
+sent = set()  def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
 
@@ -100,7 +100,7 @@ print("🚀 Bot Started")
 
 bot.send_message(
     CHANNEL,
-    "صل على النبي 🤩"
+    "أخيراً ضبط البوت الحمد لله 🤩"
 )
 
 
