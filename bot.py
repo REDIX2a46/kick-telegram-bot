@@ -70,6 +70,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 sent = set()
 
+
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
@@ -100,10 +101,39 @@ def is_live(username):
 
 print("🚀 Bot Started")
 
-bot.send_message(CHANNEL, "أخيراً  ظبط البوت الحمدلله 🤩 ")
+bot.send_message(
+    CHANNEL,
+    "أخيراً ضبط البوت الحمد لله 🤩"
+)
+
+
+# إرسال البثوث الموجودة وقت تشغيل البوت
+for username in STREAMERS:
+    live, title = is_live(username)
+
+    if live:
+        keyboard = types.InlineKeyboardMarkup()
+
+        button = types.InlineKeyboardButton(
+            "مـشـاهـده مـمـتـعـه 🤩",
+            url=f"https://kick.com/{username}"
+        )
+
+        keyboard.add(button)
+
+        bot.send_message(
+            CHANNEL,
+            f"🔴 بث مباشر الآن!\n\n"
+            f"👤 {username}\n"
+            f"📝 {title}",
+            reply_markup=keyboard
+        )
+
+        sent.add(username)
 
 
 while True:
+
     for username in STREAMERS:
 
         live, title = is_live(username)
