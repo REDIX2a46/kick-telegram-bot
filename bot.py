@@ -134,7 +134,7 @@ bot.send_message(
 # فحص الأشخاص المباشرين وقت تشغيل البوت
 for username in STREAMERS:
     live, title = is_live(username)
-
+print(f"{username} | live={live} | title={title}")
     if live:
         keyboard = types.InlineKeyboardMarkup()
 
@@ -161,6 +161,7 @@ while True:
 
         live, title = is_live(username)
 
+        
         if live and username not in sent:
 
             keyboard = types.InlineKeyboardMarkup()
