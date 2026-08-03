@@ -1,6 +1,7 @@
 import time
 import requests
 import telebot
+from telebot import types
 
 BOT_TOKEN = "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
 CHANNEL = "@redix_mt"
@@ -66,11 +67,13 @@ STREAMERS = [
 ]
 
 bot = telebot.TeleBot(BOT_TOKEN)
+
 sent = set()
 
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
+
         r = requests.get(
             url,
             headers={"User-Agent": "Mozilla/5.0"},
@@ -83,7 +86,10 @@ def is_live(username):
         data = r.json()
 
         if data.get("livestream"):
-            return True, data["livestream"].get("session_title", "بدون عنوان")
+            return True, data["livestream"].get(
+                "session_title",
+                "بدون عنوان"
+            )
 
         return False, None
 
@@ -94,20 +100,33 @@ def is_live(username):
 
 print("🚀 Bot Started")
 
-bot.send_message(CHANNEL, "✅ البوت اشتغل")
+bot.send_message(CHANNEL, "أخيراً  ظبط البوت الحمدلله 🤩 ")
+
 
 while True:
     for username in STREAMERS:
+
         live, title = is_live(username)
 
         if live and username not in sent:
+
+            keyboard = types.InlineKeyboardMarkup()
+
+            button = types.InlineKeyboardButton(
+                "مـشـاهـده مـمـتـعـه 🤩",
+                url=f"https://kick.com/{username}"
+            )
+
+            keyboard.add(button)
+
             bot.send_message(
                 CHANNEL,
                 f"🔴 بدأ بث جديد!\n\n"
                 f"👤 {username}\n"
-                f"📝 {title}\n\n"
-                f"https://kick.com/{username}"
+                f"📝 {title}",
+                reply_markup=keyboard
             )
+
             sent.add(username)
 
         elif not live and username in sent:
