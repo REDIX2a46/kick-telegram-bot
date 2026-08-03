@@ -68,7 +68,34 @@ STREAMERS = [
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
-sent = set()  def is_live(username):
+sent = set()
+
+def is_live(username):
+    try:
+        url = f"https://kick.com/api/v2/channels/{username}"
+
+        r = requests.get(
+            url,
+            headers={"User-Agent": "Mozilla/5.0"},
+            timeout=10
+        )
+
+        if r.status_code != 200:
+            return False, None
+
+        data = r.json()
+
+        if data.get("livestream"):
+            return True, data["livestream"].get(
+                "session_title",
+                "بدون عنوان"
+            )
+
+        return False, None
+
+    except Exception as e:
+        print(e)
+        return False, None
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
 
