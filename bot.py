@@ -1,4 +1,4 @@
-import time
+وااimport time
 import requests
 import telebot
 from telebot import types
