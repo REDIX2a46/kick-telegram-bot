@@ -3,7 +3,7 @@ import requests
 import telebot
 from telebot import types
 
-BOT_TOKEN = "حط_توكن_البوت_هنا"
+BOT_TOKEN = "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
