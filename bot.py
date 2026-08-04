@@ -3,7 +3,7 @@ import requests
 import telebot
 from telebot import types
 
-BOT_TOKEN =  "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
+BOT_TOKEN = "8659833120:AAGiBwuyffp5en1YHXJBQiy35EXLJF9MDA0"
 CHANNEL = "@redix_mt"
 
 STREAMERS = [
@@ -70,6 +70,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 sent = set()
 
+
 def is_live(username):
     try:
         url = f"https://kick.com/api/v2/channels/{username}"
@@ -96,45 +97,18 @@ def is_live(username):
     except Exception as e:
         print(e)
         return False, None
-    try:
-        url = f"https://kick.com/api/v2/channels/{username}"
-
-        r = requests.get(
-            url,
-            headers={"User-Agent": "Mozilla/5.0"},
-            timeout=10
-        )
-
-        if r.status_code != 200:
-            return False, None
-
-        data = r.json()
-
-        if data.get("livestream"):
-            return True, data["livestream"].get(
-                "session_title",
-                "بدون عنوان"
-            )
-
-        return False, None
-
-    except Exception as e:
-        print(e)
-        return False, None
-
-
-print("🚀 Bot Started")
+        print("🚀 Bot Started")
 
 bot.send_message(
     CHANNEL,
     "أخيراً ضبط البوت الحمد لله 🤩"
 )
 
-
 # فحص الأشخاص المباشرين وقت تشغيل البوت
 for username in STREAMERS:
     live, title = is_live(username)
-print(f"{username} | live={live} | title={title}")
+    print(f"{username} | live={live} | title={title}")
+
     if live:
         keyboard = types.InlineKeyboardMarkup()
 
@@ -147,14 +121,12 @@ print(f"{username} | live={live} | title={title}")
 
         bot.send_message(
             CHANNEL,
-            f"{username} بدا بث [{title}]\n\n"
+            f"{username} بدأ بث [{title}]\n\n"
             f"𝐊 𝐈 𝐂 𝐊 🟢𝐑 𝐄 𝐃 𝐈 𝐗 🟣",
             reply_markup=keyboard
         )
 
         sent.add(username)
-
-
 while True:
 
     for username in STREAMERS:
