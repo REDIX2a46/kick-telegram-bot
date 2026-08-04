@@ -160,8 +160,8 @@ while True:
     for username in STREAMERS:
 
         live, title = is_live(username)
+        print(f"{username} | live={live} | title={title}")
 
-        
         if live and username not in sent:
 
             keyboard = types.InlineKeyboardMarkup()
@@ -175,7 +175,7 @@ while True:
 
             bot.send_message(
                 CHANNEL,
-                f"{username} بدا بث [{title}]\n\n"
+                f"{username} بدأ بث [{title}]\n\n"
                 f"𝐊 𝐈 𝐂 𝐊 🟢𝐑 𝐄 𝐃 𝐈 𝐗 🟣",
                 reply_markup=keyboard
             )
