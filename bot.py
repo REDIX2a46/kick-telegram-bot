@@ -73,7 +73,7 @@ sent = set()
 
 def is_live(username):
     try:
-        url = f"https://kick.com/api/v2/channels/{username}"
+        url = f"https://kick.com/api/v2/channels/{username}/livestream"
 
         r = requests.get(
             url,
@@ -83,6 +83,17 @@ def is_live(username):
 
         if r.status_code != 200:
             return False, None
+
+        data = r.json()
+
+        if data and data.get("id"):
+            return True, data.get("session_title", "بدون عنوان")
+
+        return False, None
+
+    except Exception as e:
+        print(e)
+        return False, None
 
         data = r.json()
 
