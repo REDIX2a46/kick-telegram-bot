@@ -76,25 +76,26 @@ def is_live(username):
 
         headers = {
             "User-Agent": "Mozilla/5.0",
-            "Accept": "application/json"
+            "Referer": "https://kick.com/"
         }
 
         r = requests.get(url, headers=headers, timeout=10)
 
-        if r.status_code != 200:
-            print(f"{username} | HTTP {r.status_code}")
+        if r.status_code == 403:
+            print(f"{username} | Kick blocked")
             return False, None
 
         data = r.json()
 
-        if data.get("livestream"):
-            title = data["livestream"].get("session_title", "بث مباشر")
-            return True, title
+        livestream = data.get("livestream")
+
+        if livestream:
+            return True, livestream.get("session_title", "بث مباشر")
 
         return False, None
 
     except Exception as e:
-        print(f"{username} | {e}")
+        print(username, e)
         return False, None
 def send_notification(username, title):
     keyboard = types.InlineKeyboardMarkup()
