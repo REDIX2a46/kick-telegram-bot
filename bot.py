@@ -70,7 +70,7 @@ sent = set()
 bot = telebot.TeleBot(BOT_TOKEN)
 
 
-def is_live(username):
+
 def is_live(username):
     try:
         url = f"https://kick.com/{username}"
