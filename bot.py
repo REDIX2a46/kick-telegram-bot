@@ -72,30 +72,27 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 def is_live(username):
     try:
-        url = f"https://kick.com/api/v2/channels/{username}"
+        url = f"https://kick.com/{username}"
 
         headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Referer": "https://kick.com/"
+            "User-Agent": "Mozilla/5.0"
         }
 
         r = requests.get(url, headers=headers, timeout=10)
 
-        if r.status_code == 403:
-            print(f"{username} | Kick blocked")
+        if r.status_code != 200:
+            print(f"{username} | HTTP {r.status_code}")
             return False, None
 
-        data = r.json()
+        text = r.text.lower()
 
-        livestream = data.get("livestream")
-
-        if livestream:
-            return True, livestream.get("session_title", "بث مباشر")
+        if '"livestream":{' in text or '"livestream": {' in text:
+            return True, "بث مباشر"
 
         return False, None
 
     except Exception as e:
-        print(username, e)
+        print(f"{username} | {e}")
         return False, None
 def send_notification(username, title):
     keyboard = types.InlineKeyboardMarkup()
