@@ -69,11 +69,10 @@ sent = set()
 
 def is_live(username):
     try:
-        url = f"https://kick.com/api/v2/channels/{username}"
+        url = f"https://kick.com/{username}"
 
         headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/json"
+            "User-Agent": "Mozilla/5.0"
         }
 
         r = requests.get(url, headers=headers, timeout=10)
@@ -82,22 +81,14 @@ def is_live(username):
             print(f"{username} | HTTP {r.status_code}")
             return False, None
 
-        data = r.json()
-
-        livestream = data.get("livestream")
-
-        if livestream:
-            title = livestream.get("session_title", "بدون عنوان")
-            return True, title
+        if '"livestream":' in r.text:
+            return True, "بث مباشر"
 
         return False, None
 
     except Exception as e:
         print(f"{username} | {e}")
         return False, None
-
-
-def send_notification(username, title):
     keyboard = types.InlineKeyboardMarkup()
 
     button = types.InlineKeyboardButton(
