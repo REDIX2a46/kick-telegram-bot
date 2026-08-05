@@ -98,7 +98,8 @@ def is_live(username):
             return False, None
 
         page = r.text
-
+        print(page[:1000])
+        
         if '"is_live":true' in page or '"livestream"' in page:
             return True, "بث مباشر"
 
