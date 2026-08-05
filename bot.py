@@ -71,11 +71,12 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 def is_live(username):
     try:
-        url = f"https://kick.com/{username}"
+        url = f"https://kick.com/api/v2/channels/{username}"
 
         headers = {
             "User-Agent": "Mozilla/5.0",
-            "Accept": "text/html"
+            "Accept": "application/json",
+            "Referer": "https://kick.com/"
         }
 
         r = requests.get(url, headers=headers, timeout=10)
@@ -84,8 +85,13 @@ def is_live(username):
             print(f"{username} | HTTP {r.status_code}")
             return False, None
 
-        if '"livestream":{' in r.text or '"livestream": {' in r.text:
-            return True, "بث مباشر"
+        data = r.json()
+
+        livestream = data.get("livestream")
+
+        if livestream:
+            title = livestream.get("session_title", "بث مباشر")
+            return True, title
 
         return False, None
 
