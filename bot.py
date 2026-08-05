@@ -67,6 +67,9 @@ STREAMERS = [
 ]
 sent = set()
 
+bot = telebot.TeleBot(BOT_TOKEN)
+
+
 def is_live(username):
     try:
         url = f"https://kick.com/{username}"
@@ -89,6 +92,9 @@ def is_live(username):
     except Exception as e:
         print(f"{username} | {e}")
         return False, None
+
+
+def send_notification(username, title):
     keyboard = types.InlineKeyboardMarkup()
 
     button = types.InlineKeyboardButton(
@@ -104,9 +110,7 @@ def is_live(username):
         f"𝐊 𝐈 𝐂 𝐊 🟢𝐑 𝐄 𝐃 𝐈 𝐗 🟣",
         reply_markup=keyboard
     )
-bot = telebot.TeleBot(BOT_TOKEN)
-
-print("🚀 Bot Started")
+    print("🚀 Bot Started")
 
 while True:
     for username in STREAMERS:
