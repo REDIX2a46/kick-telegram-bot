@@ -74,14 +74,23 @@ def is_live(username):
     try:
         url = f"https://kick.com/{username}"
         
-        r = requests.get(
-            url,
-            headers={
-                "User-Agent": "Mozilla/5.0"
-            },
-            timeout=10
-        )
+        headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://kick.com/",
+    "Origin": "https://kick.com",
+    "Cache-Control": "no-cache"
+}
 
+session = requests.Session()
+
+r = session.get(
+    url,
+    headers=headers,
+    timeout=10,
+    allow_redirects=True
+)
         if r.status_code != 200:
             print(f"{username} | HTTP {r.status_code}")
             return False, None
