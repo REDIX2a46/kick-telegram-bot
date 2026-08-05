@@ -72,22 +72,13 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 def is_live(username):
     try:
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "application/json",
-            "Referer": "https://kick.com/",
-            "Origin": "https://kick.com"
-        }
-
-        session = requests.Session()
-        session.headers.update(headers)
-
-        # الحصول على الكوكيز أولاً
-        session.get("https://kick.com/", timeout=10)
-
-        # ثم طلب بيانات القناة
-        r = session.get(
-            f"https://kick.com/api/v2/channels/{username}",
+        url = f"https://kick.com/{username}"
+        
+        r = requests.get(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            },
             timeout=10
         )
 
@@ -95,13 +86,10 @@ def is_live(username):
             print(f"{username} | HTTP {r.status_code}")
             return False, None
 
-        data = r.json()
+        page = r.text
 
-        livestream = data.get("livestream")
-
-        if livestream:
-            title = livestream.get("session_title", "بث مباشر")
-            return True, title
+        if '"is_live":true' in page or '"livestream"' in page:
+            return True, "بث مباشر"
 
         return False, None
 
