@@ -71,32 +71,53 @@ bot = telebot.TeleBot(BOT_TOKEN)
 
 
 
+
 def is_live(username):
     try:
-        url = f"https://kick.com/api/v2/channels/{username}"
+        url = "https://kick.com/api/graphql"
+
+        payload = {
+            "operationName": "Channel",
+            "variables": {
+                "slug": username
+            },
+            "query": """
+            query Channel($slug: String!) {
+              channel(slug: $slug) {
+                livestream {
+                  isLive
+                  session_title
+                }
+              }
+            }
+            """
+        }
 
         headers = {
             "User-Agent": "Mozilla/5.0",
+            "Content-Type": "application/json",
             "Accept": "application/json"
         }
 
-        r = requests.get(url, headers=headers, timeout=10)
+        r = requests.post(url, json=payload, headers=headers, timeout=10)
+
+        print(r.status_code)
+        print(r.text[:500])
 
         if r.status_code != 200:
             return False, None
 
         data = r.json()
 
-        livestream = data.get("livestream")
+        livestream = data.get("data", {}).get("channel", {}).get("livestream")
 
-        if livestream:
-            title = livestream.get("session_title", "بث مباشر")
-            return True, title
+        if livestream and livestream.get("isLive"):
+            return True, livestream.get("session_title", "بث مباشر")
 
         return False, None
 
     except Exception as e:
-        print(username, e)
+        print(e)
         return False, None
 def send_notification(username, title):
     keyboard = types.InlineKeyboardMarkup()
